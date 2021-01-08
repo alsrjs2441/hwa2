@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='result'><p>
+        <h1>아귀와의 한판 대결 당신의 손모가지는 안녕할까요?</h1>
+        <br>
+        <a><img src='/fun/img.png'></a>
+    </p></div>
+    <div id ="2"></div>
+    <div id ="3"></div>
+    
+    
+    <br>
+    <div><button id="1" onclick="fun()">클릭</button></div>
+    <div><button id="4" onclick="result()">결과는...?</button></div>
+    <script>
+        let id = ['1_1','1_3','2_1','2_2','3_1','3_3','4_1','4_2','5_1','5_2','6_1','6_2','7_1','7_2','8_1','8_3','9_1','9_2','10_1','10_2']
+        let comb = [{'key':'12','type':'알리'},{'key':'14', 'type':'독사'},{'key':'19', 'type':'구삥'},{'key':'110', 'type':'장삥'},{'key':'410', 'type':'장사'},{'key':'46', 'type':'세륙'}
+        ,{'key':'28','type':'망통'},{'key':'37','type':'땡잡이'},{'key':'49','type':'구사'},{'key':'47','type':'암행어사'}]
+        let temp;
+        let num = 0;
+        let r = [];
+        let hand = 'lose';
+        function fun(){
+            var rand = Math.floor(Math.random() * 19);
+            // console.log(rand+""+rand2)
+            if(temp != rand){
+                if(num != 2){
+                    document.getElementById("3").innerHTML += "<a><img src='/fun/"+id[rand]+".png'></a>";
+                    num++;
+                    id.forEach(function(ele){
+                        if(ele == id[rand]){
+                            r.push(ele);
+                        }
+                    })
+                    }
+            }
+            temp = rand;
+            
+            if(num==2){
+                let order = "false";
+                let first = r.map((v)=>{
+                    var re = v.split('_');
+                    return re[0];
+                })
+                swap(first);
+                let second = r.map((v)=>{
+                    var re = v.split('_');
+                    return re[1];
+                })
+                if(first[0]==first[1] && order == "false"){
+                    document.getElementById("2").innerHTML = "<h2>"+first[0]+"땡입니다</h2>";
+                    order = "true";
+                    hand = 'win';
+                }
+                if(second[0] + second[1] == "33" && order == "false"){
+                    hand = 'win';
+                    if(first[0]<first[1]){
+                        document.getElementById("2").innerHTML = "<h1>"+first[0]+first[1]+"광땡입니다</h1>";
+                    }else{
+                        document.getElementById("2").innerHTML = "<h1>"+first[1]+first[0]+"광땡입니다</h1>";
+                    }
+                    order = "true";        
+                }
+                if(order == "false"){
+                    let sum = first.reduce((v , cur)=>{
+                        console.log(v, cur)
+                        return v + cur;
+                    })
+                    console.log(sum)
+                    let com = comb.filter((element)=>{
+                        // console.log("ky"+element.type)
+                        // if(element.key==sum) 
+                        return element.key==sum;
+                    })
+                    console.log(com)
+                    if(com.length != 0){
+                        order = "true";
+                        document.getElementById("2").innerHTML = "<h3>"+com[0].type+"입니다</h3>";
+                    }
+                }
+                if(order == "false"){
+                    var one = parseInt(first[0])
+                    var two = parseInt(first[1])
+                    if(one+two==9){
+                        document.getElementById("2").innerHTML = "<h3>"+"갑오"+"입니다</h3>";
+                    }else{
+                        var end = (one+two)%10;
+                        document.getElementById("2").innerHTML = "<h3>"+end+"끗입니다</h3>";
+                    }
+                }
+                
+            }       
+        }
+        function result(){
+            document.getElementById("result").innerHTML = "<a><img src='/fun/"+hand+".png'></a>";
+            if(hand == "lose"){
+                document.getElementById("2").innerHTML = "<h1>당신의 손모가지가 날아갔습니다</h1>";
+            }else{
+                document.getElementById("2").innerHTML = "<h1>당신의 승리입니다!!</h1>";
+            }
+        }
+        function swap(x){
+            var one = parseInt(x[0]);
+            var two = parseInt(x[1]);
+            if(one>two){
+                let t = x[0];
+                x[0] = x[1];
+                x[1] = t;
+            }
+        }
+    </script>
+</body>
+</html>
