@@ -1,0 +1,18 @@
+1. cmd 창에서
+eslint --init
+npm install eslint-plugin-html --save-dev
+
+2. 
+C:\ITStudy\99.test\node_modules\.bin 폴더 안에 있는
+.eslintrc.js 복사해서 수정할 위치에 복사한 후
+들어가서
+module.exports 클릭해서 두번째 선택
+(// eslint-disable-next-line no-undef이 위에 뜸)
+
+"plugins":[
+        "html"
+    ],
+
+3.
+settings.json 들어가서
+"eslint.validate":["javascript", "html"]
